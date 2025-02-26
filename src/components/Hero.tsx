@@ -8,11 +8,11 @@ import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
   return (
-    <section className="relative flex flex-col items-center overflow-visible">
+    <section className="flex flex-col items-center">
       <ParticlesBackground />
 
       {/* Animated Title with Typing Effect */}
-      <div className="absolute flex flex-col items-center text-center gap-12 bg-opacity-50 text-white p-20">
+      <div className="flex flex-col items-center text-center gap-12 bg-opacity-50 text-white p-20">
         <motion.h1
           className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-violet-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -20 }}
@@ -46,7 +46,7 @@ const Hero = () => {
 
         {/* Call to Action Button*/}
         <motion.div
-          className="mt-6 z-10"
+          className="mt-6"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}

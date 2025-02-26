@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#0D0D12] text-white relative flex flex-col min-h-screen`}>
+      <body className={`${inter.className} bg-[#0D0D12] text-white flex flex-col min-h-screen`}>
         <ThemeProvider attribute="class">
           <Header />
           <Hero />

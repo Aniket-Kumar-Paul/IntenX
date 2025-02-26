@@ -1,30 +1,39 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import LoginModal from "./LoginModal";
 
 const Header = () => {
-  // Dummy state for authentication (to be replaced with real auth logic later)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Simulate checking login state (replace with actual authentication logic later)
     const user = localStorage.getItem("user");
     setIsLoggedIn(!!user);
   }, []);
 
   const handleAuthAction = () => {
     if (isLoggedIn) {
-      // Logout logic (replace with actual logout logic later)
       localStorage.removeItem("user");
       setIsLoggedIn(false);
     } else {
-      // Dummy login (replace with real login/signup flow later)
-      localStorage.setItem("user", "dummyUser");
-      setIsLoggedIn(true);
+      setIsModalOpen(true);
     }
+  };
+
+  const handleLoginNear = () => {
+    localStorage.setItem("user", "nearUser");
+    setIsLoggedIn(true);
+    setIsModalOpen(false);
+  };
+
+  const handleLoginMetaMask = () => {
+    localStorage.setItem("user", "metaMaskUser");
+    setIsLoggedIn(true);
+    setIsModalOpen(false);
   };
 
   return (
@@ -34,7 +43,6 @@ const Header = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Logo & Name */}
       <Link href="/">
         <motion.h1
           className="text-2xl font-bold text-violet-400 cursor-pointer"
@@ -43,16 +51,20 @@ const Header = () => {
           IntenX
         </motion.h1>
       </Link>
-
-      {/* Login/Logout Button (Dummy Logic) */}
       <motion.div whileHover={{ scale: 1.1 }}>
         <Button 
-          className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-full shadow-md"
+          className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-lg shadow-md"
           onClick={handleAuthAction}
         >
           {isLoggedIn ? "Logout" : "Login"}
         </Button>
       </motion.div>
+      <LoginModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onLoginNear={handleLoginNear} 
+        onLoginMetaMask={handleLoginMetaMask} 
+      />
     </motion.header>
   );
 };
