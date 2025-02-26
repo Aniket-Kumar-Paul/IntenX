@@ -1,40 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import LoginModal from "./LoginModal";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    setIsLoggedIn(!!user);
-  }, []);
-
-  const handleAuthAction = () => {
-    if (isLoggedIn) {
-      localStorage.removeItem("user");
-      setIsLoggedIn(false);
-    } else {
-      setIsModalOpen(true);
-    }
-  };
-
-  const handleLoginNear = () => {
-    localStorage.setItem("user", "nearUser");
-    setIsLoggedIn(true);
-    setIsModalOpen(false);
-  };
-
-  const handleLoginMetaMask = () => {
-    localStorage.setItem("user", "metaMaskUser");
-    setIsLoggedIn(true);
-    setIsModalOpen(false);
-  };
 
   return (
     <motion.header
@@ -52,19 +27,14 @@ const Header = () => {
         </motion.h1>
       </Link>
       <motion.div whileHover={{ scale: 1.1 }}>
-        <Button 
+        <Button
           className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded-lg shadow-md"
-          onClick={handleAuthAction}
+          onClick={isLoggedIn ? logout : () => setIsModalOpen(true)}
         >
           {isLoggedIn ? "Logout" : "Login"}
         </Button>
       </motion.div>
-      <LoginModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onLoginNear={handleLoginNear} 
-        onLoginMetaMask={handleLoginMetaMask} 
-      />
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </motion.header>
   );
 };

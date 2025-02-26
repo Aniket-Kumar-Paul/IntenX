@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import ParticlesBackground from "./ParticlesBackground";
 import { TypeAnimation } from "react-type-animation";
+import LoginModal from "./LoginModal";
 
 const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="flex flex-col items-center">
       <ParticlesBackground />
 
-      {/* Animated Title with Typing Effect */}
       <div className="flex flex-col items-center text-center gap-12 bg-opacity-50 text-white p-20">
         <motion.h1
           className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-violet-500 bg-clip-text text-transparent"
@@ -32,7 +34,6 @@ const Hero = () => {
           />
         </motion.h1>
 
-        {/* Description */}
         <motion.p
           className="mt-4 text-lg md:text-xl max-w-3xl font-semibold text-white tracking-wide leading-relaxed"
           initial={{ opacity: 0 }}
@@ -44,18 +45,21 @@ const Hero = () => {
           with intelligent decision-making, ensuring your investments are optimized at all times without the need for manual intervention.
         </motion.p>
 
-        {/* Call to Action Button*/}
         <motion.div
           className="mt-6"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white px-16 py-8 text-2xl rounded-full shadow-lg font-semibold">
+          <Button
+            className="bg-violet-600 hover:bg-violet-700 text-white px-16 py-8 text-2xl rounded-full shadow-lg font-semibold"
+            onClick={() => setIsModalOpen(true)}
+          >
             Get Started
           </Button>
         </motion.div>
       </div>
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
