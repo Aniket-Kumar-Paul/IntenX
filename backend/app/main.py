@@ -1,0 +1,25 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import user_routes, asset_routes, trade_routes, auth_routes
+
+app = FastAPI()
+
+# CORS Config
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Routes
+app.include_router(user_routes.router, prefix="/api/v1", tags=["User"])
+app.include_router(asset_routes.router, prefix="/api/v1", tags=["Assets"])
+app.include_router(trade_routes.router, prefix="/api/v1", tags=["Trades"])
+app.include_router(auth_routes.router, prefix="/api/v1", tags=["Auth"])
+
+@app.get("/")
+def read_root():
+    return {"message": "IntenX FastAPI Backend Running"}
