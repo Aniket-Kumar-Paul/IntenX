@@ -149,6 +149,7 @@ impl IntenX {
             timestamp: env::block_timestamp(),
         };
 
+
         self.trade_histories.entry(account_id).or_insert_with(Vec::new).push(trade);
     }
 
