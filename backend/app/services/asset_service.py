@@ -1,5 +1,5 @@
 from models.asset import Asset
-from services.near_service import call_contract_function
+from services.near_service import call_contract_txn_function, call_contract_view_function
 
 async def add_or_update_asset(asset: Asset, trade_type: str):
     """
@@ -12,7 +12,7 @@ async def add_or_update_asset(asset: Asset, trade_type: str):
         "invested_amount": asset.invested_amount,
         "trade_type": trade_type  # 'buy' or 'sell'
     }
-    result = await call_contract_function("upsert_asset_and_update_trade_history", args)
+    result = await call_contract_txn_function("upsert_asset_and_update_trade_history", args)
     return result
 
 async def get_assets(account_id: str):
@@ -20,5 +20,5 @@ async def get_assets(account_id: str):
     Retrieve the user's portfolio by calling the NEAR smart contract.
     """
     args = {"account_id": account_id}
-    result = await call_contract_function("get_portfolio", args)
+    result = await call_contract_view_function("get_portfolio", args)
     return result

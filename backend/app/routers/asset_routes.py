@@ -13,7 +13,7 @@ async def upsert_asset(asset: Asset, trade_type: TradeType, account_id: str = De
     Add or update an asset in the portfolio.
     """
     result = await add_or_update_asset(asset, trade_type.value)
-    return {"success": True, "result": result}
+    return {"result": result}
 
 @router.get("/assets", response_model=Dict)
 async def fetch_assets(account_id: str = Depends(get_current_user)):
