@@ -2,7 +2,7 @@ from backend.app.routers import sentiment_routes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import rebalancing_routes
-from routers import user_routes, asset_routes, trade_routes, auth_routes
+from routers import user_routes, asset_routes, trade_routes, auth_routes, price_routes
 
 app = FastAPI()
 
@@ -23,6 +23,7 @@ app.include_router(trade_routes.router, prefix="/api/v1", tags=["Trades"])
 app.include_router(auth_routes.router, prefix="/api/v1", tags=["Auth"])
 app.include_router(rebalancing_routes.router, prefix="/api/v1", tags=["Rebalancing"])
 app.include_router(sentiment_routes.router, prefix="/api/v1", tags=["Sentiments"])
+app.include_router(price_routes.router, prefix="/api/v1", tags=["Prices"])
 
 @app.get("/")
 def read_root():
