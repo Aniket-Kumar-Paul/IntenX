@@ -1,6 +1,6 @@
 import random
 from datetime import datetime
-from models.sentiment import Sentiment
+from backend.app.models.sentiment_model import Sentiment
 
 SOURCES = ["Twitter", "Reddit", "News", "Forums"]
 

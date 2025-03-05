@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from typing import Dict
 from services.user_service import upsert_user_profile, get_user_profile
-from models.user import UserProfile
+from backend.app.models.user_model import UserProfile
 from utils.auth import get_current_user
 
 router = APIRouter()

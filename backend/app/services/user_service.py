@@ -1,4 +1,4 @@
-from models.user import UserProfile
+from backend.app.models.user_model import UserProfile
 from services.near_service import call_contract_txn_function, call_contract_view_function
 
 async def upsert_user_profile(user: UserProfile):

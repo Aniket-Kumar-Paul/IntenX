@@ -2,7 +2,7 @@ import requests
 from fastapi import APIRouter, HTTPException, Query
 from typing import List
 from services.price_service import fetch_coin_prices
-from models.price import CoinPriceResponse
+from backend.app.models.price_model import CoinPriceResponse
 
 router = APIRouter()
 

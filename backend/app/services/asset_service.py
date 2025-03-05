@@ -1,4 +1,4 @@
-from models.asset import Asset
+from backend.app.models.asset_model import Asset
 from services.near_service import call_contract_txn_function, call_contract_view_function
 
 async def add_or_update_asset(asset: Asset, trade_type: str):
