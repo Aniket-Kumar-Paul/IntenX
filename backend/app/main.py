@@ -1,4 +1,4 @@
-from backend.app.routers import sentiment_routes
+from app.routers import sentiment_routes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import rebalancing_routes

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from typing import Dict, List
 from services.asset_service import add_or_update_asset, get_assets
-from backend.app.models.asset_model import Asset
-from backend.app.models.trade_model import TradeType
+from app.models.asset_model import Asset
+from app.models.trade_model import TradeType
 from utils.auth import get_current_user
 
 router = APIRouter()

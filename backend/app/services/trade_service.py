@@ -1,4 +1,4 @@
-from backend.app.models.trade_model import Trade
+from app.models.trade_model import Trade
 from services.near_service import call_contract_view_function
 
 async def get_trade_history(account_id: str):

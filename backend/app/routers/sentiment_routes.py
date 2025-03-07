@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List
 from services.sentiment_service import generate_sentiment_for_assets
-from backend.app.models.sentiment_model import Sentiment
+from app.models.sentiment_model import Sentiment
 
 router = APIRouter()
 

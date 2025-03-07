@@ -1,7 +1,7 @@
 import requests
 import os
 from typing import List, Dict
-from backend.app.models.price_model import CoinInfo
+from app.models.price_model import CoinInfo
 from dotenv import load_dotenv
 
 load_dotenv()
