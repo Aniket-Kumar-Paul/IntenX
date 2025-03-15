@@ -3,9 +3,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { connect, WalletConnection, keyStores } from "near-api-js";
 import { useRouter } from 'next/navigation';
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 interface AuthContextType {
   isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   loginWithNear: () => void;
   loginWithMetaMask: () => void;
   logout: () => void;
@@ -19,10 +21,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const router = useRouter();
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    setIsLoggedIn(!!user);
+    const cookies = parseCookies();
+    console.log("Cookies:", cookies);
+    setIsLoggedIn(!!cookies.user);
 
-    // Initialize NEAR connection
     const initNear = async () => {
       const config = {
         networkId: "testnet",
@@ -36,8 +38,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const wallet = new WalletConnection(near, "intenx");
       setNearWallet(wallet);
 
+      console.log("Wallet:", wallet);
+      console.log("isSignedIn:", wallet.isSignedIn());
+
       if (wallet.isSignedIn()) {
-        localStorage.setItem("user", wallet.getAccountId());
+        setCookie(null, 'user', wallet.getAccountId(), {
+          maxAge: 30 * 24 * 60 * 60,
+          path: '/',
+          secure: true,
+          sameSite: 'lax',
+        });
         setIsLoggedIn(true);
       }
     };
@@ -47,8 +57,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const loginWithNear = () => {
     if (nearWallet) {
+      console.log("CONTRACT_ID:", process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID);
       nearWallet.requestSignIn({
-        contractId: process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID || "", // Replace with your contract ID
+        contractId: process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID || "",
         successUrl: `${window.location.origin}/dashboard`,
         failureUrl: window.location.href,
         keyType: 'ed25519'
@@ -57,8 +68,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const loginWithMetaMask = () => {
-    // MetaMask login logic here
-    localStorage.setItem("user", "metaMaskUser");
+    setCookie(null, 'user', 'metaMaskUser', {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    });
     setIsLoggedIn(true);
   };
 
@@ -66,13 +82,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (nearWallet && nearWallet.isSignedIn()) {
       nearWallet.signOut();
     }
-    localStorage.removeItem("user");
+    destroyCookie(null, 'user', { path: '/' });
     setIsLoggedIn(false);
-    router.push('/'); // Redirect to home page
+    router.push('/');
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, loginWithNear, loginWithMetaMask, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loginWithNear, loginWithMetaMask, logout }}>
       {children}
     </AuthContext.Provider>
   );
