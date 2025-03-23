@@ -4,10 +4,11 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { connect, WalletConnection, keyStores } from "near-api-js";
 import { useRouter } from 'next/navigation';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { IntenXContract } from "@/api/near";
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  contract: IntenXContract | null;
   loginWithNear: () => void;
   loginWithMetaMask: () => void;
   logout: () => void;
@@ -18,11 +19,11 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nearWallet, setNearWallet] = useState<WalletConnection | null>(null);
+  const [contract, setContract] = useState<IntenXContract | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const cookies = parseCookies();
-    console.log("Cookies:", cookies);
     setIsLoggedIn(!!cookies.user);
 
     const initNear = async () => {
@@ -38,9 +39,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const wallet = new WalletConnection(near, "intenx");
       setNearWallet(wallet);
 
-      console.log("Wallet:", wallet);
-      console.log("isSignedIn:", wallet.isSignedIn());
-
       if (wallet.isSignedIn()) {
         setCookie(null, 'user', wallet.getAccountId(), {
           maxAge: 30 * 24 * 60 * 60,
@@ -49,6 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           sameSite: 'lax',
         });
         setIsLoggedIn(true);
+        setContract(new IntenXContract(wallet));
       }
     };
 
@@ -84,11 +83,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     destroyCookie(null, 'user', { path: '/' });
     setIsLoggedIn(false);
+    setContract(null);
     router.push('/');
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loginWithNear, loginWithMetaMask, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, contract, loginWithNear, loginWithMetaMask, logout }}>
       {children}
     </AuthContext.Provider>
   );
