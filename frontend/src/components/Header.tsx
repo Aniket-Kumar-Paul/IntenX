@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import LoginModal from "./LoginModal";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -18,7 +19,8 @@ const Header = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Link href="/">
+      <Link href="/" className="flex justify-between items-center gap-3">
+        <Image src="/logo.png" width={40} height={40} alt="IntenX Logo" />
         <motion.h1
           className="text-2xl font-bold text-violet-400 cursor-pointer"
           whileHover={{ scale: 1.1 }}

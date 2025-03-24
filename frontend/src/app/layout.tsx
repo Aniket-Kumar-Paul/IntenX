@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "IntenX - AI-Powered Cross-Chain Trading",
   description: "Automated AI-driven portfolio rebalancing & trading powered by NEAR Intents and Bitte.ai.",
+  icons: { icon: "/logo.png" }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
