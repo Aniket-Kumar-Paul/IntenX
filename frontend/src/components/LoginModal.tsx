@@ -27,7 +27,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           onClick={onClose} // Close when clicking outside modal
         >
           <motion.div
-            className="bg-[#0D0D12] p-6 sm:p-8 lg:p-10 rounded-2xl shadow-xl w-full max-w-md sm:max-w-lg lg:max-w-xl text-center"
+            className="bg-[#0D0D12] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-xl w-full max-w-md sm:max-w-lg lg:max-w-xl text-center"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -36,7 +36,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4">Login to IntenX</h2>
 
             <Button
-              className="bg-[#5A5A5A] hover:bg-[#4A4A4A] rounded-2xl text-white w-full h-full flex items-center justify-center gap-2 my-7 py-2 sm:py-3 lg:py-4 text-sm sm:text-base lg:text-lg"
+              className="bg-[#5A5A5A] hover:bg-[#4A4A4A] rounded-3xl text-white w-full h-full flex items-center justify-center gap-2 my-7 py-2 sm:py-3 lg:py-4 text-sm sm:text-base lg:text-lg"
               onClick={() => {
                 loginWithNear();
                 onClose();
@@ -50,7 +50,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 <TooltipTrigger asChild>
                   <span className="w-full">
                     <Button
-                      className="bg-[#F6851B] text-white rounded-2xl w-full h-full flex items-center justify-center gap-2 py-2 sm:py-3 my-4 lg:py-4 text-sm sm:text-base lg:text-lg"
+                      className="bg-[#F6851B] text-white rounded-3xl w-full h-full flex items-center justify-center gap-2 py-2 sm:py-3 my-4 lg:py-4 text-sm sm:text-base lg:text-lg"
                       disabled
                     >
                       <FaEthereum className="text-white" /> Login with MetaMask
