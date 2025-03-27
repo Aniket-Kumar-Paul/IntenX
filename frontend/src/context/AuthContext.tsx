@@ -2,9 +2,10 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { connect, WalletConnection, keyStores } from "near-api-js";
-import { useRouter } from 'next/navigation';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { useRouter } from "next/navigation";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { IntenXContract } from "@/api/near";
+import { showToast } from "@/components/ui/ToastNotifier";
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -40,11 +41,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setNearWallet(wallet);
 
       if (wallet.isSignedIn()) {
-        setCookie(null, 'user', wallet.getAccountId(), {
+        setCookie(null, "user", wallet.getAccountId(), {
           maxAge: 30 * 24 * 60 * 60,
-          path: '/',
+          path: "/",
           secure: true,
-          sameSite: 'lax',
+          sameSite: "lax",
         });
         setIsLoggedIn(true);
         setContract(new IntenXContract(wallet));
@@ -54,25 +55,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initNear();
   }, []);
 
+  // 👇 Handle Login Failure & Show Toast Notification
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("error") === "nearfail") {
+      showToast("error", "NEAR login failed. Please try again.");
+      router.replace(window.location.pathname); // Remove error from URL
+    }
+  }, []);
+
   const loginWithNear = () => {
     if (nearWallet) {
-      console.log("CONTRACT_ID:", process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID);
       nearWallet.requestSignIn({
         contractId: process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID || "",
         successUrl: `${window.location.origin}/dashboard`,
-        failureUrl: window.location.href,
-        keyType: 'ed25519'
+        failureUrl: `${window.location.origin}/?error=nearfail`,
+        keyType: "ed25519",
       });
     }
   };
 
   const loginWithMetaMask = () => {
-    setCookie(null, 'user', 'metaMaskUser', {
+    setCookie(null, "user", "metaMaskUser", {
       maxAge: 30 * 24 * 60 * 60,
-      path: '/',
-      httpOnly: true,
+      path: "/",
       secure: true,
-      sameSite: 'lax',
+      sameSite: "lax",
     });
     setIsLoggedIn(true);
   };
@@ -81,10 +89,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (nearWallet && nearWallet.isSignedIn()) {
       nearWallet.signOut();
     }
-    destroyCookie(null, 'user', { path: '/' });
+    destroyCookie(null, "user", { path: "/" });
     setIsLoggedIn(false);
     setContract(null);
-    router.push('/');
+    router.push("/");
+    showToast("info", "Logged out successfully!");
   };
 
   return (
