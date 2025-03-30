@@ -14,7 +14,7 @@ export interface UserProfile {
   email: string;
   risk_level: RiskLevel;
   rebalance_frequency: number;
-  last_rebalance_time: number;
+  last_rebalance_time?: number;
   automatic_rebalance: boolean;
 }
 
