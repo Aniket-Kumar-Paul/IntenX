@@ -3,6 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
 import LoginModal from "./LoginModal";
 import ProfileUpdateModal from "./ProfileUpdateModal";
@@ -35,15 +40,23 @@ const Header = () => {
       {/* Right Side Buttons */}
       <div className="flex items-center gap-4">
         {isLoggedIn && (
-          <>
-            {/* Profile Picture Button */}
-            <motion.button
-              onClick={() => setIsProfileModalOpen(true)}
-              className="w-10 h-10 border-violet-600 rounded-full text-white flex items-center justify-center text-lg font-bold hover:border-violet-700 border-4"
-            >
-              {userProfile && userProfile.username?.charAt(0).toUpperCase() || "U"}
-            </motion.button>
-          </>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {/* Profile Picture Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                onClick={() => setIsProfileModalOpen(true)}
+                className="w-10 h-10 border-violet-600 rounded-full text-white flex items-center justify-center text-lg font-bold hover:border-violet-700 border-2"
+              >
+                {(userProfile &&
+                  userProfile.username?.charAt(0).toUpperCase()) ||
+                  "U"}
+              </motion.button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>View Profile</p>
+            </TooltipContent>
+          </Tooltip>
         )}
 
         {/* Login/Logout Button */}
@@ -58,9 +71,15 @@ const Header = () => {
       </div>
 
       {/* Login Modal */}
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
       {/* Profile Update Modal */}
-      <ProfileUpdateModal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)} />
+      <ProfileUpdateModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </motion.header>
   );
 };
