@@ -23,7 +23,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           onClick={onClose} // Close when clicking outside modal
         >
           <motion.div
-            className="bg-[#0D0D12] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-xl w-full max-w-md sm:max-w-lg lg:max-w-xl relative"
+            className="bg-[#0D0D12] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-xl w-full max-w-sm sm:max-w-md lg:max-w-lg relative"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
             </button>
 
             {/* Title */}
-            {title && <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-4 text-center">{title}</h2>}
+            {title && <h2 className="text-md sm:text-lg lg:text-xl font-bold text-white mb-4 text-center">{title}</h2>}
 
             {/* Modal Content */}
             {children}

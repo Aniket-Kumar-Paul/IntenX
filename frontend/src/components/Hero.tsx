@@ -16,7 +16,7 @@ const Hero = () => {
 
       <div className="flex flex-col items-center text-center gap-12 bg-opacity-50 text-white p-20">
         <motion.h1
-          className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-violet-500 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-violet-500 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}

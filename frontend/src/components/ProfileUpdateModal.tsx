@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { RiskLevel, UserProfile } from "@/types/nearContractTypes";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/Modal";
+import { showToast } from "./ui/ToastNotifier";
 
 const ProfileUpdateModal = ({
   isOpen,
@@ -54,6 +55,7 @@ const ProfileUpdateModal = ({
     });
     fetchUserProfile();
     onClose();
+    showToast("info", "Profile updated successfully!");
   };
 
   return (
@@ -129,7 +131,7 @@ const ProfileUpdateModal = ({
 
         {/* Save Button */}
         <Button
-          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-3 rounded-md text-lg font-medium"
+          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-3 py-6 rounded-2xl text-lg font-medium"
           onClick={handleUpdate}
         >
           Save

@@ -75,12 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!nearWallet || !contract || !isLoggedIn) return;
 
     try {
-      console.log("Fetching profile...");
       let profile = await contract.getProfile(nearWallet.getAccountId());
-      console.log("Fetched profile:", profile);
 
       if (!profile) {
-        console.log("No profile found. Creating a new one...");
         await contract.upsertProfile({
           username: "",
           email: "",
@@ -89,11 +86,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           automatic_rebalance: false,
         });
 
-        console.log("Profile created. Fetching again...");
         profile = await contract.getProfile(nearWallet.getAccountId());
-        console.log("Fetched profile:", profile);
       }
-      setUserProfile(profile);
+
+      {
+        profile &&
+          setUserProfile({
+            ...profile,
+            rebalance_frequency: profile.rebalance_frequency / 60, // Convert to minutes
+          });
+      }
     } catch (error) {
       console.error("Error fetching profile:", error);
     }

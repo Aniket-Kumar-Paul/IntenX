@@ -4,7 +4,7 @@ import { ToastContainer, toast, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const commonStyles = {
-  padding: "16px",
+  padding: "4px 20px",
   borderRadius: "8px",
   width: "120%",
 };
@@ -39,7 +39,7 @@ export const showToast = (type: "success" | "error" | "info", message: string) =
   };
 
   toast(
-    <div className="text-center w-full text-lg font-semibold">
+    <div className="text-center w-full text-sm font-semibold">
       {message}
     </div>,
     { ...options, type }

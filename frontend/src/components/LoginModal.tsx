@@ -23,7 +23,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Login to IntenX">
       <Button
-        className="bg-[#5A5A5A] hover:bg-[#4A4A4A] rounded-3xl text-white w-full h-full flex items-center justify-center gap-2 my-7 py-2 sm:py-3 lg:py-4 text-sm sm:text-base lg:text-lg"
+        className="bg-[#5A5A5A] hover:bg-[#4A4A4A] rounded-3xl text-white w-full h-full flex items-center justify-center gap-2 my-7 py-3 text-sm lg:text-base"
         onClick={() => {
           loginWithNear();
           onClose();
@@ -36,7 +36,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         <TooltipTrigger asChild>
           <span className="w-full">
             <Button
-              className="bg-[#F6851B] text-white rounded-3xl w-full h-full flex items-center justify-center gap-2 py-2 sm:py-3 my-4 lg:py-4 text-sm sm:text-base lg:text-lg"
+              className="bg-[#F6851B] text-white rounded-3xl w-full h-full flex items-center justify-center gap-2 py-3 my-4 text-sm lg:text-base"
               disabled
             >
               <FaEthereum className="text-white" /> Login with MetaMask
@@ -49,7 +49,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       </Tooltip>
 
       <button
-        className="mt-4 text-gray-400 hover:text-white text-sm sm:text-base lg:text-lg w-full text-center"
+        className="mt-4 text-gray-400 hover:text-white text-sm lg:text-base w-full text-center"
         onClick={onClose}
       >
         Cancel
