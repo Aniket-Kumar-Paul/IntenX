@@ -2,11 +2,12 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { connect, WalletConnection, keyStores } from "near-api-js";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { IntenXContract } from "@/api/near";
 import { showToast } from "@/components/ui/ToastNotifier";
 import { RiskLevel, UserProfile } from "@/types/nearContractTypes";
+import { useLoading } from "./LoadingContext";
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -28,8 +29,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [contract, setContract] = useState<IntenXContract | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const router = useRouter();
+  const { setPageLoading } = useLoading();
+  const pathname = usePathname(); // Track current route
 
   useEffect(() => {
+    setPageLoading(true);
     const cookies = parseCookies();
     setIsLoggedIn(!!cookies.user);
 
@@ -60,6 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     initNear();
+    setPageLoading(false);
   }, []);
 
   // Handle Login Failure & Show Toast Notification
@@ -74,6 +79,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchUserProfile = async () => {
     if (!nearWallet || !contract || !isLoggedIn) return;
 
+    setPageLoading(true);
     try {
       let profile = await contract.getProfile(nearWallet.getAccountId());
 
@@ -98,6 +104,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     } catch (error) {
       console.error("Error fetching profile:", error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -110,12 +118,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const loginWithNear = () => {
     if (nearWallet) {
+      setPageLoading(true);
+
       nearWallet.requestSignIn({
         contractId: process.env.NEXT_PUBLIC_NEAR_CONTRACT_ID || "",
         successUrl: `${window.location.origin}/dashboard`,
         failureUrl: `${window.location.origin}/?error=nearfail`,
         keyType: "ed25519",
       });
+
+      setPageLoading(false);
     }
   };
 
@@ -129,17 +141,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoggedIn(true);
   };
 
-  const logout = () => {
+  useEffect(() => {
+    if (pathname === "/") {
+      setPageLoading(false); // Hide loader when user reaches home
+    }
+  }, [pathname]);  
+
+  const logout = async () => {
+    setPageLoading(true);
+  
     if (nearWallet && nearWallet.isSignedIn()) {
       nearWallet.signOut();
     }
+  
     destroyCookie(null, "user", { path: "/" });
     setIsLoggedIn(false);
     setContract(null);
     setUserProfile(null);
     router.push("/");
     showToast("info", "Logged out successfully!");
-  };
+  };  
 
   return (
     <AuthContext.Provider
