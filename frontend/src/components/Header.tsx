@@ -22,9 +22,6 @@ const Header = () => {
   return (
     <motion.header
       className="w-full py-4 px-6 flex justify-between items-center bg-[#0D0D12] shadow-md"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
     >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-3">

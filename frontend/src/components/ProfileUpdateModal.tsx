@@ -6,6 +6,7 @@ import { RiskLevel, UserProfile } from "@/types/nearContractTypes";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/Modal";
 import { showToast } from "./ui/ToastNotifier";
+import { Loader2 } from "lucide-react"; // Importing spinner icon
 
 const ProfileUpdateModal = ({
   isOpen,
@@ -22,6 +23,7 @@ const ProfileUpdateModal = ({
     rebalance_frequency: 0,
     automatic_rebalance: false,
   });
+  const [loading, setLoading] = useState(false); // State for loading spinner
 
   // Update profile state when userProfile is available
   useEffect(() => {
@@ -48,14 +50,24 @@ const ProfileUpdateModal = ({
 
   // Handle Profile Update
   const handleUpdate = async () => {
-    if (!contract) return;
-    await contract.upsertProfile({
-      ...profile,
-      rebalance_frequency: profile.rebalance_frequency * 60, // Convert minutes to seconds
-    });
-    fetchUserProfile();
-    onClose();
-    showToast("info", "Profile updated successfully!");
+    if (!contract || !profile) return;
+    
+    setLoading(true); // Show spinner
+    
+    try {
+      await contract.upsertProfile({
+        ...profile,
+        rebalance_frequency: profile.rebalance_frequency * 60, // Convert minutes to seconds
+      });
+      await fetchUserProfile();
+      showToast("success", "Profile updated successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Profile update failed:", error);
+      showToast("error", "Failed to update profile. Please try again.");
+    } finally {
+      setLoading(false); // Hide spinner after operation
+    }
   };
 
   return (
@@ -129,12 +141,17 @@ const ProfileUpdateModal = ({
           </button>
         </div>
 
-        {/* Save Button */}
+        {/* Save Button with Spinner */}
         <Button
-          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-3 py-6 rounded-2xl text-lg font-medium"
+          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-3 py-6 rounded-2xl text-lg font-medium flex items-center justify-center"
           onClick={handleUpdate}
+          disabled={loading} // Disable button while loading
         >
-          Save
+          {loading ? (
+            <Loader2 className="animate-spin"/> // Show spinner
+          ) : (
+            "Save"
+          )}
         </Button>
       </div>
     </Modal>
