@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/context/AuthContext";
 import { LoadingProvider } from "@/context/LoadingContext";
 import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import ToastNotifier from "@/components/ui/ToastNotifier";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,7 +36,8 @@ export default function RootLayout({
               <AuthProvider>
                 <GlobalLoader />
                 <Header />
-                <main className="flex-grow">{children}</main> {/* Pushes footer down */}
+                <main className="flex-grow">{children}</main>
+                <BottomNav />
                 <Footer />
               </AuthProvider>
             </LoadingProvider>
