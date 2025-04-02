@@ -6,7 +6,7 @@ import { RiskLevel, UserProfile } from "@/types/nearContractTypes";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/Modal";
 import { showToast } from "./ui/ToastNotifier";
-import { Loader2 } from "lucide-react"; // Importing spinner icon
+import { Loader2 } from "lucide-react"; 
 
 const ProfileUpdateModal = ({
   isOpen,
@@ -71,40 +71,40 @@ const ProfileUpdateModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Update Profile">
-      <div className="flex flex-col gap-6">
+    <Modal isOpen={isOpen} onClose={onClose} title="Profile">
+      <div className="flex flex-col gap-4">
         {/* Username Input */}
         <div className="flex flex-col gap-1">
-          <label className="text-white text-sm">Username</label>
+          <label className="text-white text-xs">Username</label>
           <input
             type="text"
             name="username"
             value={profile.username}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-900 text-white rounded-md border border-gray-700 focus:border-violet-500 outline-none"
+            className="w-full p-2 px-4 bg-gray-900 text-white rounded-full border border-gray-700 focus:border-violet-500 outline-none text-sm"
           />
         </div>
 
         {/* Email Input */}
         <div className="flex flex-col gap-1">
-          <label className="text-white text-sm">Email</label>
+          <label className="text-white text-xs">Email</label>
           <input
             type="email"
             name="email"
             value={profile.email}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-900 text-white rounded-md border border-gray-700 focus:border-violet-500 outline-none"
+            className="w-full p-2 px-4 bg-gray-900 text-white rounded-full border border-gray-700 focus:border-violet-500 outline-none text-sm"
           />
         </div>
 
         {/* Risk Level Dropdown */}
         <div className="flex flex-col gap-1">
-          <label className="text-white text-sm">Risk Level</label>
+          <label className="text-white text-xs">Risk Level</label>
           <select
             name="risk_level"
             value={profile.risk_level}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-900 text-white rounded-md border border-gray-700 focus:border-violet-500 outline-none"
+            className="w-full p-2 px-4 bg-gray-900 text-white rounded-full border border-gray-700 focus:border-violet-500 outline-none text-sm"
           >
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
@@ -114,28 +114,28 @@ const ProfileUpdateModal = ({
 
         {/* Rebalance Frequency */}
         <div className="flex flex-col gap-1">
-          <label className="text-white text-sm">Rebalance Frequency (minutes)</label>
+          <label className="text-white text-xs">Rebalance Frequency (minutes)</label>
           <input
             type="number"
             name="rebalance_frequency"
             value={profile.rebalance_frequency}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-900 text-white rounded-md border border-gray-700 focus:border-violet-500 outline-none"
+            className="w-full p-2 px-4 bg-gray-900 text-white rounded-full border border-gray-700 focus:border-violet-500 outline-none text-sm"
           />
         </div>
 
         {/* Toggle Switch for Auto Rebalance */}
         <div className="flex items-center justify-between">
-          <span className="text-white text-sm">Enable Auto Rebalance</span>
+          <span className="text-white text-xs">Enable Auto Rebalance</span>
           <button
-            className={`w-14 h-7 flex items-center rounded-full p-1 transition ${
+            className={`w-12 h-6 flex items-center rounded-full p-1 transition ${
               profile.automatic_rebalance ? "bg-violet-600" : "bg-gray-600"
             }`}
             onClick={handleToggle}
           >
             <div
-              className={`w-6 h-6 bg-white rounded-full transition ${
-                profile.automatic_rebalance ? "translate-x-7" : "translate-x-0"
+              className={`w-5 h-5 bg-white rounded-full transition ${
+                profile.automatic_rebalance ? "translate-x-6" : "translate-x-0"
               }`}
             />
           </button>
@@ -143,7 +143,7 @@ const ProfileUpdateModal = ({
 
         {/* Save Button with Spinner */}
         <Button
-          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-3 py-6 rounded-2xl text-lg font-medium flex items-center justify-center"
+          className="w-full bg-violet-600 hover:bg-violet-700 text-white p-2 rounded-full text-sm flex items-center justify-center"
           onClick={handleUpdate}
           disabled={loading} // Disable button while loading
         >

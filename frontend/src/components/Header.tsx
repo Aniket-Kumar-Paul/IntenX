@@ -46,7 +46,7 @@ const Header = () => {
                   fetchUserProfile(); // Fetch latest profile before opening modal
                   setIsProfileModalOpen(true);
                 }}
-                className="w-8 h-8 border-violet-600 rounded-full text-white flex items-center justify-center text-md font-bold hover:border-violet-700 border-2"
+                className="w-9 h-9 border-violet-600 rounded-full text-white flex items-center justify-center text-md font-bold hover:border-violet-700 border-2"
               >
                 {(userProfile &&
                   userProfile.username?.charAt(0).toUpperCase()) ||
@@ -63,7 +63,7 @@ const Header = () => {
         <motion.div>
           <Button
             size={"sm"}
-            className="bg-violet-600 hover:bg-violet-700 text-white px-6 rounded-lg"
+            className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-4 rounded-full"
             onClick={isLoggedIn ? logout : () => setIsLoginModalOpen(true)}
           >
             {isLoggedIn ? "Logout" : "Login"}
