@@ -85,7 +85,7 @@ const BottomNav = () => {
         >
           <nav
             ref={navRef}
-            className="bg-[#2a2a34] rounded-full shadow-lg flex items-center px-5 py-2 gap-2 transition-all min-w-[200px] mx-auto"
+            className="bg-white/10 rounded-full shadow-lg flex items-center px-5 py-2 gap-2 transition-all min-w-[200px] mx-auto"
           >
             {navLinks.map((link, index) => (
               <Link
