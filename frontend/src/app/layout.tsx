@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-[#0D0D12] text-white flex flex-col min-h-screen`}
+        className={`${inter.className} bg-radial-animated text-white flex flex-col min-h-screen`}
       >
         <ThemeProvider attribute="class">
           <TooltipProvider>
