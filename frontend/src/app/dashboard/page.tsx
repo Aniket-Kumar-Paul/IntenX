@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
 
   return (
-    <div className="container mx-auto flex flex-col items-center w-full h-full md:h-[80vh] p-6">
+    <div className="container mx-auto flex flex-col items-center w-[90vw] h-full md:h-[80vh] p-6">
       {/* Heading */}
       <h1 className="text-2xl font-bold text-white mb-4">Dashboard</h1>
 

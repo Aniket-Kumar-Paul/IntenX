@@ -130,9 +130,9 @@
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(60, 40, 110, 0.25), rgba(11, 2, 49, 0));
+  background: radial-gradient(circle, rgba(1, 112, 124, 0.25), rgba(12, 223, 177, 0));
   filter: blur(100px);
-  animation: blobMove 60s infinite ease-in-out alternate;
+  animation: blobMove 30s infinite ease-in-out alternate;
   z-index: 0;
   pointer-events: none;
 }
@@ -140,7 +140,7 @@
 .bg-radial-animated::after {
   top: 60%;
   left: 60%;
-  background: radial-gradient(circle, rgba(5, 47, 89, 0.2), rgba(3, 62, 84, 0));
+  background: radial-gradient(circle, rgba(1, 112, 124, 0.25), rgba(12, 223, 177, 0));
   animation-delay: 1s;
 }
 
